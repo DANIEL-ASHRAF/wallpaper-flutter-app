@@ -74,11 +74,9 @@ class MobileView extends HookViewModelWidget<HomeViewModel>{
             ),
           ),
           SizedBox(height: 10,),
-          Container(
-            height: 500,
+          Expanded(
             child: GridItemsBuilder<CategoryModel>(
               scrollDirection: Axis.vertical,
-              horizontalPadding: 0,
               items: model.categories,
               itemBuilder:(context,category)=>PhotoItem(
                 imageUrl: category.imageUrl,

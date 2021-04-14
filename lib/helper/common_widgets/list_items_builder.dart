@@ -85,7 +85,10 @@ class GridItemsBuilder<T> extends StatelessWidget {
     this.scrollDirection:Axis.horizontal,
     this.horizontalPadding:10,
     this.verticalPadding:10,
-    this.crossAxisCount:2
+    this.maxCrossAxisExtent:300,
+    this.childAspectRatio:.5,
+    this.mainAxisSpacing:10,
+    this.crossAxisSpacing:10,
 
   }) : super(key: key);
   final List<T> items;
@@ -93,25 +96,27 @@ class GridItemsBuilder<T> extends StatelessWidget {
   final Axis scrollDirection;
   final double horizontalPadding;
   final double verticalPadding;
-  final int crossAxisCount;
+  final double maxCrossAxisExtent;
+  final double childAspectRatio;
+  final double mainAxisSpacing;
+  final double crossAxisSpacing;
+
   @override
   Widget build(BuildContext context) {
     return _buildList(items);
   }
-
   Widget _buildList(List<T> items) {
     return GridView.builder(
-        padding: EdgeInsets.symmetric(horizontal:horizontalPadding,vertical: verticalPadding),
+        padding: EdgeInsets.only(left:horizontalPadding,right:horizontalPadding,bottom: verticalPadding),
         scrollDirection: scrollDirection,
         itemCount: items.length,
         gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-          maxCrossAxisExtent: 200,
-          childAspectRatio:.5,
-          mainAxisSpacing: 10,
-          crossAxisSpacing: 20
+          maxCrossAxisExtent: maxCrossAxisExtent,
+          childAspectRatio:childAspectRatio,
+          mainAxisSpacing: mainAxisSpacing,
+          crossAxisSpacing: crossAxisSpacing
         ),
       itemBuilder: (context, index) => itemBuilder(context, items[index]),
-
     );
   }
 }
