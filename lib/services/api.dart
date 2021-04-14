@@ -1,3 +1,5 @@
+import 'package:wallpaper_app/secerts/api_key.dart';
+
 enum Endpoint{
   StreetArt,
   WildLife,
@@ -6,37 +8,18 @@ enum Endpoint{
   Motivation,
   Bikes,
   Cars,
-  Curated
 }
-
 class API{
-  final String apiKey="563492ad6f91700001000001bb9826f8b8b24c55a20719625582f84d";
-  static final String photosHost="api.pexels.com";
-  static final String videosHost="www.pexels.com/videos";
-  final String numberOfPages="per_page=20";
+  final String apiKey=KapiKey;
+  Uri _curatedUrl = Uri.parse("https://api.pexels.com/v1/curated?per_page=5");
+  Uri _endPointUrl(dynamic endpoint) => Uri.parse("https://api.pexels.com/v1/search?query=${_paths[endpoint]}&per_page=5");
+  Uri _searchUrl(dynamic search) => Uri.parse("https://api.pexels.com/v1/search?query=$search&per_page=5");
 
-  Uri curatedPhotosUri()=>Uri(
-    scheme: 'https',
-    host: photosHost,
-    path: "v1/curated?per_page=15"
-//    path:"/v1/${_paths[Endpoint.Curated]}?$numberOfPages",
-//    queryParameters:numberOfPages,
-  );
+  Uri curatedPhotosUri()=>_curatedUrl;
+  Uri endPointUri(Endpoint endpoint)=>_endPointUrl(endpoint);
+  Uri searchUri(String search)=>_searchUrl(search);
 
-  Uri endPointUri(Endpoint endpoint)=>Uri(
-    scheme: 'https',
-    host: photosHost,
-    path:"${_paths[endpoint]}&$numberOfPages"
-  );
-
-  Uri endPointSearchUri(String search)=>Uri(
-      scheme: 'https',
-      host: photosHost,
-      path:'/search',
-      query:"query=$search&$numberOfPages"
-  );
-
-  static Map<Endpoint,String> _paths={
+   Map<Endpoint,String> _paths={
     Endpoint.Bikes:'Bikes',
     Endpoint.Cars:'Cars',
     Endpoint.City:'City',
@@ -44,6 +27,5 @@ class API{
     Endpoint.Nature:'Nature',
     Endpoint.StreetArt:'StreetArt',
     Endpoint.WildLife:'WildLife',
-    Endpoint.Curated:'curated'
   };
 }

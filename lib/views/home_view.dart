@@ -26,7 +26,6 @@ class HomeView extends StatelessWidget {
         );
       },
       viewModelBuilder:()=>HomeViewModel(),
-
     );
   }
 }
@@ -46,7 +45,7 @@ class MobileView extends HookViewModelWidget<HomeViewModel>{
         backgroundColor: whiteColor ,
       ),
       body:
-//      model.data==null? Text("No Data"):
+      model.fetchingCuratedPhotos? Center(child: CircularProgressIndicator(),):
       Column(
         children: [
           Padding(

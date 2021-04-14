@@ -14,7 +14,7 @@ ThemeData normalMode= ThemeData(
         accentColor: lightBlueColor,
         backgroundColor: backgroundColor,
         textTheme: TextTheme(
-                bodyText1:TextStyle(color:const Color(0xFFD8A31A),fontSize: 22,fontWeight: FontWeight.bold),
+                bodyText1:TextStyle(color:blueColor,fontSize: 22,fontWeight: FontWeight.bold),
                 bodyText2:TextStyle(color: Colors.black,fontSize: 22,fontWeight: FontWeight.bold),
         ),
         textSelectionTheme: TextSelectionThemeData(
