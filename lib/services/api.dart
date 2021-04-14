@@ -10,17 +10,17 @@ enum Endpoint{
 }
 
 class API{
-  API({required this.apiKey});
-  final String apiKey;
-  static final String photosHost="www.pexels.com/v1";
+  final String apiKey="563492ad6f91700001000001bb9826f8b8b24c55a20719625582f84d";
+  static final String photosHost="api.pexels.com";
   static final String videosHost="www.pexels.com/videos";
   final String numberOfPages="per_page=20";
 
   Uri curatedPhotosUri()=>Uri(
     scheme: 'https',
     host: photosHost,
-    path:_paths[Endpoint.Curated],
-    query:numberOfPages,
+    path: "v1/curated?per_page=15"
+//    path:"/v1/${_paths[Endpoint.Curated]}?$numberOfPages",
+//    queryParameters:numberOfPages,
   );
 
   Uri endPointUri(Endpoint endpoint)=>Uri(
@@ -46,5 +46,4 @@ class API{
     Endpoint.WildLife:'WildLife',
     Endpoint.Curated:'curated'
   };
-
 }

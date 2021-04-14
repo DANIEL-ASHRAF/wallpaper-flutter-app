@@ -67,7 +67,8 @@ class ListItemsBuilder<T> extends StatelessWidget {
 
   Widget _buildList(List<T> items) {
     return ListView.separated(
-      padding: EdgeInsets.symmetric(horizontal:horizontalPadding,vertical: verticalPadding),
+        addAutomaticKeepAlives: true,
+        padding: EdgeInsets.symmetric(horizontal:horizontalPadding,vertical: verticalPadding),
       scrollDirection: scrollDirection,
       itemCount: items.length,
       separatorBuilder: (context, index) =>
@@ -107,6 +108,7 @@ class GridItemsBuilder<T> extends StatelessWidget {
   }
   Widget _buildList(List<T> items) {
     return GridView.builder(
+        addAutomaticKeepAlives: true,
         padding: EdgeInsets.only(left:horizontalPadding,right:horizontalPadding,bottom: verticalPadding),
         scrollDirection: scrollDirection,
         itemCount: items.length,

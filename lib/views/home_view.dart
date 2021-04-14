@@ -8,8 +8,10 @@ import 'package:wallpaper_app/helper/common_widgets/responsive_sensitive.dart';
 import 'package:wallpaper_app/helper/common_widgets/validators.dart';
 import 'package:wallpaper_app/helper/constants/app_colors.dart';
 import 'package:wallpaper_app/models/category_model.dart';
+import 'package:wallpaper_app/models/photo_model.dart';
 import 'package:wallpaper_app/view_models/home_view_model.dart';
 import 'package:wallpaper_app/views/components/category_item.dart';
+import 'components/photo_item.dart';
 
 class HomeView extends StatelessWidget {
   @override
@@ -30,7 +32,8 @@ class HomeView extends StatelessWidget {
 }
 
 class MobileView extends HookViewModelWidget<HomeViewModel>{
-  MobileView({Key? key}) : super(key: key, reactive: false);
+  MobileView({Key? key}) : super(key: key, reactive: true);
+
   @override
   Widget buildViewModelWidget(BuildContext context, HomeViewModel model) {
     var _searchFocusNode=useFocusNode();
@@ -42,7 +45,9 @@ class MobileView extends HookViewModelWidget<HomeViewModel>{
         elevation: 0,
         backgroundColor: whiteColor ,
       ),
-      body: Column(
+      body:
+//      model.data==null? Text("No Data"):
+      Column(
         children: [
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8),
@@ -75,11 +80,11 @@ class MobileView extends HookViewModelWidget<HomeViewModel>{
           ),
           SizedBox(height: 10,),
           Expanded(
-            child: GridItemsBuilder<CategoryModel>(
+            child: GridItemsBuilder<Photo>(
               scrollDirection: Axis.vertical,
-              items: model.categories,
-              itemBuilder:(context,category)=>PhotoItem(
-                imageUrl: category.imageUrl,
+              items: model.photos,
+              itemBuilder:(context,photo)=>PhotoItem(
+                imageUrl: photo.src.portrait,
               ),
             ),
           )
@@ -105,5 +110,5 @@ Widget appBarTitle(BuildContext context)=>Row(
   mainAxisAlignment: MainAxisAlignment.center,
   children: [
   Text("Wallpaper",style:Theme.of(context).textTheme.bodyText2),
-  Text("Hub",style: Theme.of(context).textTheme.bodyText1)
+  Text("House",style: Theme.of(context).textTheme.bodyText1)
 ],);

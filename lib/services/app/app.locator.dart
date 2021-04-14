@@ -9,6 +9,9 @@
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
+import '../api.dart';
+import '../api_service.dart';
+
 final locator = StackedLocator.instance;
 
 void setupLocator() {
@@ -16,4 +19,6 @@ void setupLocator() {
   locator.registerLazySingleton(() => DialogService());
   locator.registerLazySingleton(() => SnackbarService());
   locator.registerLazySingleton(() => BottomSheetService());
+  locator.registerLazySingleton(() => API());
+  locator.registerLazySingleton(() => APIService());
 }
