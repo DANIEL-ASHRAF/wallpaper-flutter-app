@@ -6,7 +6,7 @@ import 'package:wallpaper_app/views/home_view.dart';
 import 'helper/common_widgets/dialog/custom_dialog_ui.dart';
 import 'helper/constants/app_colors.dart';
 
-void main() {
+void main(){
   WidgetsFlutterBinding.ensureInitialized();
   setupLocator();
   setupDialogUi();

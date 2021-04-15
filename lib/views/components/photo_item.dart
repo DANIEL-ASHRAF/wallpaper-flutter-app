@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 class PhotoItem extends StatefulWidget  {
   PhotoItem({required this.imageUrl});
   final String? imageUrl;
-
   @override
   _PhotoItemState createState() => _PhotoItemState();
 }

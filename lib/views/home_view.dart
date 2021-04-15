@@ -4,6 +4,7 @@ import 'package:stacked/stacked.dart';
 import 'package:stacked_hooks/stacked_hooks.dart';
 import 'package:wallpaper_app/helper/common_widgets/custom_text_form_field.dart';
 import 'package:wallpaper_app/helper/common_widgets/list_items_builder.dart';
+import 'package:wallpaper_app/helper/common_widgets/refresh_widget.dart';
 import 'package:wallpaper_app/helper/common_widgets/responsive_sensitive.dart';
 import 'package:wallpaper_app/helper/common_widgets/validators.dart';
 import 'package:wallpaper_app/helper/constants/app_colors.dart';
@@ -20,6 +21,7 @@ class HomeView extends StatelessWidget {
       builder: (context,model,_)
       {
         model.getTheCategories();
+//        model.getCuratedPhotos();
         return ResponsiveSensitive(
           mobileBody: MobileView(),
           desktopBody: WebView(),
@@ -30,13 +32,12 @@ class HomeView extends StatelessWidget {
   }
 }
 
+
 class MobileView extends HookViewModelWidget<HomeViewModel>{
   MobileView({Key? key}) : super(key: key, reactive: true);
-
   @override
   Widget buildViewModelWidget(BuildContext context, HomeViewModel model) {
     var _searchFocusNode=useFocusNode();
-
     return Scaffold(
       backgroundColor: whiteColor,
       appBar: AppBar(
@@ -45,7 +46,7 @@ class MobileView extends HookViewModelWidget<HomeViewModel>{
         backgroundColor: whiteColor ,
       ),
       body:
-      model.fetchingCuratedPhotos? Center(child: CircularProgressIndicator(),):
+//      model.fetchingCuratedPhotos? Center(child: CircularProgressIndicator(),):
       Column(
         children: [
           Padding(
@@ -59,8 +60,9 @@ class MobileView extends HookViewModelWidget<HomeViewModel>{
                 hint: "Search wallpaper",
                 focusBorderColor: Theme.of(context).primaryColor,
                 focusNode: _searchFocusNode,
-                enterPressed: (){
-                    _searchFocusNode.unfocus();
+                enterPressed: ()async{
+                await  model.getTrendPhotos();
+                  _searchFocusNode.unfocus();
                 },
                cursorColor:Theme.of(context).primaryColor ,
             ),
@@ -79,7 +81,7 @@ class MobileView extends HookViewModelWidget<HomeViewModel>{
           ),
           SizedBox(height: 10,),
           Expanded(
-            child: GridItemsBuilder<Photo>(
+            child:GridItemsBuilder<Photo>(
               scrollDirection: Axis.vertical,
               items: model.photos,
               itemBuilder:(context,photo)=>PhotoItem(
@@ -92,6 +94,7 @@ class MobileView extends HookViewModelWidget<HomeViewModel>{
     );
   }
 }
+
 
 class WebView extends StatelessWidget {
   @override
