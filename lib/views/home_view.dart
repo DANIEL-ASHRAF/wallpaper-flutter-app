@@ -43,7 +43,7 @@ class MobileView extends HookViewModelWidget<HomeViewModel>{
     return Scaffold(
       backgroundColor: whiteColor,
       appBar: AppBar(
-        title: appBarTitle(context),
+        title: appBarTitle(context:context,isItGrid: model.isItGrid,onTap:()=> model.setViewStyle()),
         elevation: 0,
         backgroundColor: whiteColor ,
       ),
@@ -95,7 +95,17 @@ class MobileView extends HookViewModelWidget<HomeViewModel>{
           SizedBox(height: 10,),
           Expanded(
             child:model.isBusy?Center(child:EmptyContent(justTitle: true,title: "Loading..",) ,):
+            model.isItGrid?
             GridItemsBuilder<Photo>(
+              emptyContentTitleTextColor: Theme.of(context).primaryColor,
+              emptyContentSubTitleTextColor: Theme.of(context).accentColor,
+              scrollDirection: Axis.vertical,
+              items: model.photos,
+              itemBuilder:(context,photo)=>PhotoItem(
+                imageUrl: photo.src.portrait,
+              ),
+            )
+            :ListItemsBuilder<Photo>(
               emptyContentTitleTextColor: Theme.of(context).primaryColor,
               emptyContentSubTitleTextColor: Theme.of(context).accentColor,
               scrollDirection: Axis.vertical,
@@ -118,15 +128,28 @@ class WebView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.red,
-        title: appBarTitle(context),
+        title: appBarTitle(context: context,onTap:(){} ,isItGrid: true),
       ),
     );
   }
 }
 
-Widget appBarTitle(BuildContext context)=>Row(
-  mainAxisAlignment: MainAxisAlignment.center,
+
+Widget appBarTitle({required BuildContext context,required void Function()? onTap,required bool isItGrid})=>Row(
+//  mainAxisAlignment: MainAxisAlignment.center,
   children: [
-  Text("Wallpaper",style:Theme.of(context).textTheme.bodyText2),
-  Text("House",style: Theme.of(context).textTheme.bodyText1)
-],);
+  Expanded(
+    child: Row(
+      children: [
+        Text("Wallpaper",style:Theme.of(context).textTheme.bodyText2),
+        Text("House",style: Theme.of(context).textTheme.bodyText1),
+      ],
+    ),
+  ),
+    Align(
+      alignment: Alignment.centerRight,
+      child: InkWell(
+          onTap: onTap,
+          child: Icon(!isItGrid? Icons.grid_view:Icons.list_alt_outlined,color: Colors.grey,)),
+    )
+  ],);

@@ -18,7 +18,9 @@ class _PhotoItemState extends State<PhotoItem> with AutomaticKeepAliveClientMixi
             child:CachedNetworkImage(
               fit: BoxFit.cover,
               imageUrl:widget.imageUrl!,
-              placeholder: (context, url) => Container(child: Center(child: CircularProgressIndicator())),
+              placeholder: (context, url) => Container(
+                  height: constraints.minHeight,width: constraints.maxWidth,
+                  child: Center(child: CircularProgressIndicator())),
               errorWidget: (context, url, error) => Icon(Icons.error),
             ),
           ),

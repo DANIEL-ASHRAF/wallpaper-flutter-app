@@ -53,7 +53,9 @@ class ListItemsBuilder<T> extends StatelessWidget {
     required this.itemBuilder,
     this.scrollDirection:Axis.horizontal,
     this.horizontalPadding:10,
-    this.verticalPadding:10
+    this.verticalPadding:10,
+    this.emptyContentTitleTextColor,
+    this.emptyContentSubTitleTextColor,
 
   }) : super(key: key);
   final List<T> items;
@@ -61,6 +63,8 @@ class ListItemsBuilder<T> extends StatelessWidget {
   final Axis scrollDirection;
   final double horizontalPadding;
   final double verticalPadding;
+  final Color? emptyContentTitleTextColor;
+  final Color? emptyContentSubTitleTextColor;
 
   @override
   Widget build(BuildContext context) {
@@ -68,7 +72,9 @@ class ListItemsBuilder<T> extends StatelessWidget {
   }
 
   Widget _buildList(List<T> items) {
-    return ListView.separated(
+    return items.isEmpty?EmptyContent(title: "There no result",message: "try another words!!",
+      titleTextColor:emptyContentTitleTextColor ,subTitleTextColor:emptyContentSubTitleTextColor ,):
+    ListView.separated(
         addAutomaticKeepAlives: true,
         padding: EdgeInsets.symmetric(horizontal:horizontalPadding,vertical: verticalPadding),
       scrollDirection: scrollDirection,
