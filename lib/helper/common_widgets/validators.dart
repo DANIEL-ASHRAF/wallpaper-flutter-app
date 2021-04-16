@@ -10,7 +10,7 @@ import 'package:form_field_validator/form_field_validator.dart';
     return false;
   }
 
-  final passwordValidator = MultiValidator([
+final passwordValidator = MultiValidator([
     RequiredValidator(errorText: 'Password is required'),
     MinLengthValidator(8, errorText: 'Password must be at least 8 digits long'),
     MaxLengthValidator(20, errorText: 'Password must be no more than 20 digits long'),
@@ -22,7 +22,6 @@ import 'package:form_field_validator/form_field_validator.dart';
   ]);
 
   final searchValidator = MultiValidator([
-    RequiredValidator(errorText: 'Email is required'),
   ]);
 
 

@@ -4,7 +4,6 @@ import 'package:wallpaper_app/data/categories.dart';
 import 'package:wallpaper_app/helper/constants/methods.dart';
 import 'package:wallpaper_app/models/category_model.dart';
 import 'package:wallpaper_app/models/photo_model.dart';
-import 'package:wallpaper_app/secerts/api_key.dart';
 import 'package:wallpaper_app/services/api.dart';
 import 'package:wallpaper_app/services/api_service.dart';
 import 'package:wallpaper_app/services/app/app.locator.dart';
@@ -21,9 +20,11 @@ class HomeViewModel extends FutureViewModel<Photo?>{
   List<CategoryModel> categories = [];
   List<Photo> photos=[];
   FetchApi fetchApi=FetchApi.curated;
-  late String search;
+  late String _search;
   late Endpoint endpoint;
   bool flag= true;
+  void setSearch(String search){_search=search;}
+  String get searchText =>_search;
   void getTheCategories(){
     categories=getCategories();
   }
@@ -39,7 +40,7 @@ class HomeViewModel extends FutureViewModel<Photo?>{
     }on PlatformException catch(e){
       showErrorDialog(e.message);
     }catch(e){
-      showErrorDialog(null);
+      showErrorDialog(e.toString());
     }
   }
   Future<Photo?> getTrendPhotos()async{
@@ -55,16 +56,17 @@ class HomeViewModel extends FutureViewModel<Photo?>{
       notifyListeners();
     }
   }
-  //TODO if text empty unfocus only
   Future<Photo?> getSearchPhotos()async{
     try{
+      setBusy(true);
       photos.clear();
-      photos= await apiService.getSearchPhotos("trend");
+      photos= await apiService.getSearchPhotos(searchText);
     }on PlatformException catch(e){
       showErrorDialog(e.message);
     }catch(e){
       showErrorDialog(null);
     }finally{
+      setBusy(false);
       notifyListeners();
     }
   }

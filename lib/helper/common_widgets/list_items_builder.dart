@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:wallpaper_app/helper/common_widgets/empty_content.dart';
+import 'package:wallpaper_app/helper/constants/app_colors.dart';
 
 typedef ItemWidgetBuilder<T> = Widget Function(BuildContext context, T item);
 
@@ -90,6 +92,8 @@ class GridItemsBuilder<T> extends StatelessWidget {
     this.childAspectRatio:.5,
     this.mainAxisSpacing:10,
     this.crossAxisSpacing:10,
+    this.emptyContentTitleTextColor,
+    this.emptyContentSubTitleTextColor,
 
   }) : super(key: key);
   final List<T> items;
@@ -101,13 +105,17 @@ class GridItemsBuilder<T> extends StatelessWidget {
   final double childAspectRatio;
   final double mainAxisSpacing;
   final double crossAxisSpacing;
+  final Color? emptyContentTitleTextColor;
+  final Color? emptyContentSubTitleTextColor;
 
   @override
   Widget build(BuildContext context) {
     return _buildList(items);
   }
   Widget _buildList(List<T> items) {
-    return GridView.builder(
+    return items.isEmpty?EmptyContent(title: "There no result",message: "try another words!!",
+        titleTextColor:emptyContentTitleTextColor ,subTitleTextColor:emptyContentSubTitleTextColor ,):
+      GridView.builder(
         addAutomaticKeepAlives: true,
         padding: EdgeInsets.only(left:horizontalPadding,right:horizontalPadding,bottom: verticalPadding),
         scrollDirection: scrollDirection,

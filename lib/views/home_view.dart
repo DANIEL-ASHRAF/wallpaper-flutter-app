@@ -3,6 +3,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_hooks/stacked_hooks.dart';
 import 'package:wallpaper_app/helper/common_widgets/custom_text_form_field.dart';
+import 'package:wallpaper_app/helper/common_widgets/empty_content.dart';
 import 'package:wallpaper_app/helper/common_widgets/list_items_builder.dart';
 import 'package:wallpaper_app/helper/common_widgets/refresh_widget.dart';
 import 'package:wallpaper_app/helper/common_widgets/responsive_sensitive.dart';
@@ -38,6 +39,7 @@ class MobileView extends HookViewModelWidget<HomeViewModel>{
   @override
   Widget buildViewModelWidget(BuildContext context, HomeViewModel model) {
     var _searchFocusNode=useFocusNode();
+    var _searchTextEditingController=useTextEditingController();
     return Scaffold(
       backgroundColor: whiteColor,
       appBar: AppBar(
@@ -60,9 +62,15 @@ class MobileView extends HookViewModelWidget<HomeViewModel>{
                 hint: "Search wallpaper",
                 focusBorderColor: Theme.of(context).primaryColor,
                 focusNode: _searchFocusNode,
+                controller:_searchTextEditingController,
                 enterPressed: ()async{
-                await  model.getTrendPhotos();
-                  _searchFocusNode.unfocus();
+                  if(_searchTextEditingController.text.trim().isEmpty){
+                    _searchFocusNode.unfocus();
+                  }else{
+                    model.setSearch(_searchTextEditingController.text);
+                    await model.getSearchPhotos();
+                    _searchFocusNode.unfocus();
+                  }
                 },
                cursorColor:Theme.of(context).primaryColor ,
             ),
@@ -81,7 +89,10 @@ class MobileView extends HookViewModelWidget<HomeViewModel>{
           ),
           SizedBox(height: 10,),
           Expanded(
-            child:GridItemsBuilder<Photo>(
+            child:model.isBusy?Center(child:EmptyContent(justTitle: true,title: "Loading..",) ,):
+            GridItemsBuilder<Photo>(
+              emptyContentTitleTextColor: Theme.of(context).primaryColor,
+              emptyContentSubTitleTextColor: Theme.of(context).accentColor,
               scrollDirection: Axis.vertical,
               items: model.photos,
               itemBuilder:(context,photo)=>PhotoItem(
