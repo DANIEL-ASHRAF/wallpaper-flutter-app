@@ -22,6 +22,7 @@ class HomeViewModel extends FutureViewModel<Photo?>{
   FetchApi fetchApi=FetchApi.curated;
   late String _search;
   late Endpoint endpoint;
+  String? _doNotRepeat;
   bool flag= true;
   void setSearch(String search){_search=search;}
   String get searchText =>_search;
@@ -56,15 +57,19 @@ class HomeViewModel extends FutureViewModel<Photo?>{
       notifyListeners();
     }
   }
+  //TODO if we need to make the refresh indicator we will add flag for it to enter in the if condition
   Future<Photo?> getSearchPhotos()async{
     try{
-      setBusy(true);
-      photos.clear();
-      photos= await apiService.getSearchPhotos(searchText);
+      if(_doNotRepeat==null || _doNotRepeat!=searchText){
+        setBusy(true);
+        photos.clear();
+        photos= await apiService.getSearchPhotos(searchText);
+        _doNotRepeat=searchText;
+      }
     }on PlatformException catch(e){
       showErrorDialog(e.message);
     }catch(e){
-      showErrorDialog(null);
+      showErrorDialog(e.toString());
     }finally{
       setBusy(false);
       notifyListeners();

@@ -5,7 +5,6 @@ import 'package:stacked_hooks/stacked_hooks.dart';
 import 'package:wallpaper_app/helper/common_widgets/custom_text_form_field.dart';
 import 'package:wallpaper_app/helper/common_widgets/empty_content.dart';
 import 'package:wallpaper_app/helper/common_widgets/list_items_builder.dart';
-import 'package:wallpaper_app/helper/common_widgets/refresh_widget.dart';
 import 'package:wallpaper_app/helper/common_widgets/responsive_sensitive.dart';
 import 'package:wallpaper_app/helper/common_widgets/validators.dart';
 import 'package:wallpaper_app/helper/constants/app_colors.dart';
@@ -15,6 +14,7 @@ import 'package:wallpaper_app/view_models/home_view_model.dart';
 import 'package:wallpaper_app/views/components/category_item.dart';
 import 'components/photo_item.dart';
 
+//TODO problem occured when open app without internet
 class HomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -62,6 +62,7 @@ class MobileView extends HookViewModelWidget<HomeViewModel>{
                 hint: "Search wallpaper",
                 focusBorderColor: Theme.of(context).primaryColor,
                 focusNode: _searchFocusNode,
+                textInputAction: TextInputAction.done,
                 controller:_searchTextEditingController,
                 enterPressed: ()async{
                   if(_searchTextEditingController.text.trim().isEmpty){
@@ -84,6 +85,10 @@ class MobileView extends HookViewModelWidget<HomeViewModel>{
               itemBuilder:(context,category)=>CategoryItem(
                 title: category.categoryName,
                 imageUrl: category.imageUrl,
+                onTap: ()async{
+                  model.setSearch(category.categoryName!);
+                 await model.getSearchPhotos();
+                },
               ),
             ),
           ),

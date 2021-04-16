@@ -11,9 +11,9 @@ enum Endpoint{
 }
 class API{
   final String apiKey=KapiKey;
-  Uri _curatedUrl = Uri.parse("https://api.pexels.com/v1/curated?per_page=10");
+  Uri _curatedUrl = Uri.parse("https://api.pexels.com/v1/curated?per_page=30");
   Uri _endPointUrl(dynamic endpoint) => Uri.parse("https://api.pexels.com/v1/search?query=${_paths[endpoint]}&per_page=15");
-  Uri _searchUrl(dynamic search) => Uri.parse("https://api.pexels.com/v1/search?query=$search&per_page=15");
+  Uri _searchUrl(dynamic search) => Uri.parse("https://api.pexels.com/v1/search?query=$search&per_page=30");
 
   Uri curatedPhotosUri()=>_curatedUrl;
   Uri endPointUri(Endpoint endpoint)=>_endPointUrl(endpoint);
