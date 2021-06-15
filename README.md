@@ -1,16 +1,15 @@
 # wallpaper_app
+## Fetch images from pexels api 
 
-A new Flutter application.
+Fetch data
 
-## Getting Started
+<img src="https://user-images.githubusercontent.com/60400690/122106769-9b01f380-ce1a-11eb-8206-0addc4110359.jpeg" width=300 height=450>
 
-This project is a starting point for a Flutter application.
+Gridview style
 
-A few resources to get you started if this is your first Flutter project:
+<img src="https://user-images.githubusercontent.com/60400690/122106767-9a695d00-ce1a-11eb-9fa9-8c4e786428d9.jpeg" width=300 height=450>
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+Listview style
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+<img src="https://user-images.githubusercontent.com/60400690/122106761-99d0c680-ce1a-11eb-8fa6-a4fafaec87e8.jpeg" width=300 height=450>
+
