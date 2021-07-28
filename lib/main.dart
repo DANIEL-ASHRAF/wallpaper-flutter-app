@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:stacked_services/stacked_services.dart';
 import 'package:wallpaper_app/services/app/app.locator.dart';
+import 'package:wallpaper_app/services/app/app.router.dart';
 import 'package:wallpaper_app/views/home_view.dart';
 
 import 'helper/common_widgets/dialog/custom_dialog_ui.dart';
@@ -22,7 +24,9 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: normalMode,
-      home: HomeView(),
+      navigatorKey: StackedService.navigatorKey,
+      initialRoute: Routes.homeView,
+      onGenerateRoute: StackedRouter().onGenerateRoute,
     );
   }
 }

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:wallpaper_app/helper/common_widgets/empty_content.dart';
 import 'package:wallpaper_app/helper/constants/app_colors.dart';
 
+//TODO make list items builder has grid and list and by bool convert between them
 typedef ItemWidgetBuilder<T> = Widget Function(BuildContext context, T item);
 
 //class ListItemsBuilder<T> extends StatelessWidget {

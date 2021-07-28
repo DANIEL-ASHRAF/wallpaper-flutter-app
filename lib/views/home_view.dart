@@ -15,6 +15,7 @@ import 'package:wallpaper_app/views/components/category_item.dart';
 import 'components/photo_item.dart';
 
 //TODO problem occured when open app without internet
+//TODO save network image and navigate to image view
 class HomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -103,6 +104,7 @@ class MobileView extends HookViewModelWidget<HomeViewModel>{
               items: model.photos,
               itemBuilder:(context,photo)=>PhotoItem(
                 imageUrl: photo.src.portrait,
+                onTap: ()async=>await model.navigateWithoutAnimation(photo.src.portrait!),
               ),
             )
             :ListItemsBuilder<Photo>(
@@ -112,6 +114,7 @@ class MobileView extends HookViewModelWidget<HomeViewModel>{
               items: model.photos,
               itemBuilder:(context,photo)=>PhotoItem(
                 imageUrl: photo.src.portrait,
+                onTap: ()async=>await model.navigateWithoutAnimation(photo.src.portrait!),
               ),
             ),
           )
@@ -148,7 +151,7 @@ Widget appBarTitle({required BuildContext context,required void Function()? onTa
   ),
     Align(
       alignment: Alignment.centerRight,
-      child: InkWell(
+      child: GestureDetector(
           onTap: onTap,
           child: Icon(!isItGrid? Icons.grid_view:Icons.list_alt_outlined,color: Colors.grey,)),
     )
